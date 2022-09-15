@@ -13,6 +13,8 @@
 
         .displayBox{
             display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .btn{
             font-size:3rem;
@@ -22,11 +24,34 @@
         }
 
         .display{
+            display: flex;
             width:70%;
             min-height:400px;
             font-size: 5rem;
             background-color: burlywood;
             color:white;
+            overflow: hidden;
+        }
+        .letter{
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            font-size: 5rem;
+            padding:1.2em;
+            height: 100px;
+            width:100px;
+            margin:0px 5px;
+            background-color: rgb(255, 136, 0);
+            border:2px solid black;
+            transition: all 3s;
+        }
+
+        .moveRight{
+            transform: translateX(100px);
+        }
+
+        .moveLeft{
+            transform: translateX(-100px);
         }
 
     </style>
@@ -39,22 +64,80 @@
         </div>
 
         <div class="displayBox">
-            <div class="btn"><</div>
+            <div class="btn left"><</div>
             <div class="display">
 
             </div>
-            <div class="btn">></div>
+            <div class="btn right">></div>
         </div>
     </div>
     <script>
         let submitBtn = document.querySelector("button")
         let inputBox = document.querySelector("input")
         let displayBox = document.querySelector(".display")
+        let rightRotateBtn = document.querySelector(".right")
+        let leftRotateBtn = document.querySelector(".left")
+
+
+        let userString = ""
+
+        rightRotateBtn.onclick = rotate
+        leftRotateBtn.onclick = rotate
+
 
         submitBtn.onclick = function(){
-            displayBox.innerHTML = `<h1>${inputBox.value}</h1>`
+            userString = inputBox.value
+            // displayBox.innerHTML = `<h1>${userString}</h1>`
+            displayBox.innerHTML = update(userString)
         }
 
+        function update(s){
+            let letters = Array.from(s)
+            let resHtml = ""
+            for(let letter of letters){
+                resHtml += `<div class="letter">${letter}</div>`
+            }
+            return resHtml
+        }
+
+        // function rotate(e){
+        //     let btn = e.target
+        //     if(btn.innerText.trim()==">"){
+        //         userString = rotateRightOnce(userString)
+        //     }
+        //     else{
+        //         userString = rotateLeftOnce(userString)
+        //     }
+        //     displayBox.innerHTML = `<h1>${userString}</h1>`
+        // }
+
+        function addClass(className){
+            let letterBoxes = document.querySelectorAll(".letter")
+            for(let letterBox of letterBoxes){
+                letterBox.classList.add(className)
+            }
+        }
+
+        function rotate(e){
+            let btn = e.target
+            if(btn.innerText.trim()==">"){
+                userString = rotateRightOnce(userString)
+                addClass("moveRight")
+
+            }
+            else{
+                userString = rotateLeftOnce(userString)
+                addClass("moveLeft")
+            }
+            // displayBox.innerHTML = `<h1>${userString}</h1>`
+        }
+        function rotateRightOnce(s){
+            return s.slice(-1)+s.slice(0,-1)
+        }
+
+        function rotateLeftOnce(s){
+            return s.slice(1)+s[0]
+        }
     </script>
 </body>
 </html>
