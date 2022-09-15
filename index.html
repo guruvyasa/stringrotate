@@ -47,7 +47,14 @@
         </div>
     </div>
     <script>
-        
+        let submitBtn = document.querySelector("button")
+        let inputBox = document.querySelector("input")
+        let displayBox = document.querySelector(".display")
+
+        submitBtn.onclick = function(){
+            displayBox.innerHTML = `<h1>${inputBox.value}</h1>`
+        }
+
     </script>
 </body>
 </html>
